@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_view_order_form_cscr" model="ir.ui.view">
+        <field name="name">sale.view.order.form.inherit.cscr</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='note_group']" position="after">
+                <field name="note1" nolabel="1" placeholder="Notes 1..."/>
+                <!-- <field name="note2" nolabel="1" placeholder="Notes 2..."/> -->
+            </xpath>
+        </field>
+    </record>
+   
+</odoo>

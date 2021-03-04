@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="external_layout_standard">
+    <div class="header">
+        <table width="100%" style="font-size:12px;">
+            <tr>
+                <td width="50%"><strong><span t-field="o.company_id.name"/></strong><br/></td>
+                <td width="10%"></td>
+                <td width="10%"></td>
+                <td rowspan="3"><img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="height: auto;width: 100%;" alt="Logo"/></td>
+            </tr>
+            <tr>
+                <td><strong>R.F.C.: <span t-field="o.company_id.vat"/></strong></td>
+                <td width="15%"></td>
+                <td width="15%"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: left;"><strong> Cotización:</strong></td>
+                <td style="text-align: left;"><strong> <span t-field="o.name"/></strong></td>
+            </tr>
+        </table>
+    </div>
+    <br/>
+    <div class="article o_report_layout_standard" style="font-size:12px;" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+        <t t-call="web.address_layout"/>
+        <t t-raw="0"/>
+    </div>
+
+    <div class="footer o_standard_footer">
+        <div class="text-center" style="border-top: 1px solid black;font-size:12px;">
+            <ul class="list-inline mb4">
+                <li t-if="company.name" class="list-inline-item d-inline"><span t-field="company.name"/> |</li>
+                <li t-if="company.street" class="list-inline-item d-inline"><span t-field="company.street"/> |</li>
+                <li t-if="company.street2" class="list-inline-item d-inline"><span t-field="company.street2"/> |</li>
+                <li t-if="company.city" class="list-inline-item d-inline"><span t-field="company.city"/></li>
+                <li t-if="company.state_id.name" class="list-inline-item d-inline"><span t-field="company.state_id.name"/></li>
+                <li t-if="company.zip" class="list-inline-item d-inline"><span t-field="company.zip"/> |</li>
+                <li t-if="company.country_id" class="list-inline-item d-inline"><span t-field="company.country_id.name"/> |</li>
+                <li t-if="company.phone" class="list-inline-item d-inline">Tel: <span t-field="company.phone"/> |</li>
+                <li t-if="company.email" class="list-inline-item d-inline"><span t-field="company.email"/></li>
+            </ul>
+
+            <div name="financial_infos">
+                <span t-field="company.report_footer"/>
+            </div>
+
+            <div t-if="report_type == 'pdf'" class="text-muted">
+                Page: <span class="page"/> / <span class="topage"/>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="new_external_layout">
+    <t t-if="not o" t-set="o" t-value="doc"/>
+
+    <t t-if="not company">
+        <t t-if="company_id">
+            <t t-set="company" t-value="company_id"/>
+        </t>
+        <t t-elif="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id.sudo()"/>
+        </t>
+        <t t-else="else">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+    </t>
+
+    <t t-esc="company.update_scss()"/>
+
+    <t t-call="cuallimex_sales_custom_report.external_layout_standard"><t t-raw="0"/></t>
+
+</template>
+
+<template id="so_document_custom_report">
+    <t t-call="cuallimex_sales_custom_report.new_external_layout">
+        <t t-set="o" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+        <div class="page">
+        <div class="oe_structure"/>
+        <br/>
+        <table width="100%"> <!-- Client and delivery information begin here-->
+            <tr>
+                <td width="35%">
+                    <strong>CLIENTE</strong>
+                    <t t-if="o.partner_id.parent_id.ref">
+                        <!-- Slight kludge: if reference field is set on partner's parent (Company,Firstname Lastname), output it -->
+                        &amp;#44; &amp;nbsp;
+                        <span t-field="o.partner_id.parent_id.ref"/>
+                    </t>
+                    <t t-if="o.partner_id.ref">
+                        <!-- If the reference value is set to partner, print it-->
+                        &amp;#44; &amp;nbsp;
+                        <span t-field="o.partner_id.ref"/>
+                    </t>
+                </td>
+                <td width="30%"></td>
+                <td style="text-align: left;" width="50%"><strong>DIRECCIÓN DE ENTREGA</strong></td>
+            </tr>
+            <tr>            
+            <td style="text-align: left;"> <!-- This is left column.-->
+                    <t t-if="o.partner_id.parent_id"><!-- Logic: if a parent connection exists, print parent's name-->
+                        <span t-field="o.partner_id.parent_id"/>
+                    </t>
+                    <t t-else=""> <!-- If parent does not exist, just print the partner_id-->
+                        <span t-field="o.partner_id"/>
+                    </t>
+               </td>
+                <td></td>
+                <td style="text-align: left;"> <!-- This IS the right column of the company name-->
+                   <span t-field="o.partner_id"/> <!-- Just id as this prints company name and person name if exists-->
+                </td>
+            </tr>
+            <tr>
+                <td>RFC: <span t-field="o.partner_id.vat"/></td> <!-- Left column RFC -->
+                <td></td>
+                <td style="text-align: left;"> &amp;nbsp;&amp;nbsp; <span t-field="o.partner_id.company_id.vat"/><!-- Right column RFC. No heading since it is typically empty --> </td>
+            </tr>
+            <tr>
+                <td> <!-- This is the address for left column -->
+                    <div t-field="o.partner_id"
+                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' /></td>
+                <td></td>
+                <td style="text-align: left;"> 
+                <!-- The followign will print contact's normal address. -->
+                <div t-field="o.partner_id"
+                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' />
+                
+                <!-- This will print the delivery address (?) if set. A bit of quickhack as if set, will print both -->
+                    <div t-field="o.partner_id.company_id"
+                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' /></td>
+            </tr>
+
+        </table>
+        <br/><br/>
+
+        <table width="100%">
+            <tr>
+                <td colspan="5"><strong>Muchas gracias por su consulta</strong></td>
+            </tr>
+            <tr>
+                <td width="15%"><strong>Contacto:</strong></td>
+                <td width="27%"><span t-if="o.partner_id.company_type == 'person'" t-field="o.partner_id.title.name"/> <span t-if="o.partner_id.company_type == 'person'" t-field="o.partner_id.name"/></td>
+                <td width="20%"></td>
+                <td width="12%" style="text-align: right;"><strong>Fecha:</strong></td>
+                <td style="text-align: right;"><span t-field="o.date_order"/></td>
+            </tr>
+            <tr>
+                <td width="15%"><strong>Cargo / Area:</strong></td>
+                <td width="27%"><span t-if="o.partner_id.company_type == 'person'" t-field="o.partner_id.function"/></td>
+                <td width="20%"></td>
+                <td width="12%" style="text-align: right;"><strong>Vigencia:</strong></td>
+                <td style="text-align: right;"><span t-field="o.validity_date"/></td>
+            </tr>
+
+            <tr>
+                <td width="15%"><strong>Telefonos:</strong></td>
+                <td width="27%"><span t-field="o.partner_id.phone"/></td>
+                <td width="20%"></td>
+                <td width="12%" style="text-align: right;"><strong>Rpte:</strong></td>
+                <td style="text-align: right;"><span t-esc="user_id.name"/></td>
+            </tr>
+
+            <tr>
+                <td width="15%"><strong>E-mail:</strong></td>
+                <td width="27%"><span t-field="o.partner_id.email"/></td>
+                <td width="20%"></td>
+                <td width="12%" style="text-align: right;"><strong>Condiciones:</strong></td>
+                <td style="text-align: right;"><span t-field="o.payment_term_id.name"/></td>
+            </tr>
+
+            <tr>
+                <td width="15%"></td>
+                <td width="27%"></td>
+                <td width="20%"></td>
+                <td width="12%" style="text-align: right;"><strong>Moneda:</strong></td>
+                <td style="text-align: right;"><span t-field="o.currency_id.name"/></td>
+            </tr>
+
+        </table><br/><br/>
+
+        <t t-set="display_discount" t-value="any([l.discount for l in doc.order_line])"/>
+        <table class="table table-sm o_main_table">
+            <colgroup>
+                <col width='13%' />
+                <col width='30%' />
+                <col width='8%' />
+                <col width='10%' />
+                <col width='15%' />
+                <col t-if="display_discount" width='9%'/>
+                <col width='15%' />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th name="th_description" class="text-left">Item / N° de Parte</th>
+                    <th name="th_description" class="text-left">Descripción</th>
+                    <th name="th_quantity" class="text-right">Cantidad</th>
+                    <th name="th_quantity" class="text-right">Unida de Medida</th>
+                    <th name="th_priceunit" class="text-right">Precio Unitario</th>
+                    <th t-if="display_discount" name="th_discount" class="text-right">Descto %</th>
+                    <th name="th_taxes" class="text-right">Importe</th>
+                </tr>
+            </thead>
+            <tbody class="sale_tbody">
+
+                <t t-set="current_subtotal" t-value="0"/>
+
+                <t t-foreach="doc.order_line" t-as="line">
+
+                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+
+                    <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                        <t t-if="not line.display_type">
+                            <td name="td_name">
+                                <span t-field="line.product_id.default_code"/><br/>
+                            </td>
+                            <td name="td_name"><span t-field="line.name"/></td>
+                            <td name="td_quantity" class="text-right">
+                                <span t-field="line.product_uom_qty"/>
+                            </td>
+                            <td name="td_quantity" class="text-right">
+                                <span t-field="line.product_uom"/>
+                            </td>
+                            <td name="td_priceunit" class="text-right o_price_total">
+                                <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                            </td>
+                            <td t-if="display_discount" class="text-right">
+                                <span t-field="line.discount"/>
+                            </td>
+                            <td name="td_subtotal" class="text-right o_price_total">
+                                <span t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                <span t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                            </td>
+                        </t>
+                        <t t-if="line.display_type == 'line_section'">
+                            <td name="td_section_line" colspan="99">
+                                <span t-field="line.name"/>
+                            </td>
+                            <t t-set="current_section" t-value="line"/>
+                            <t t-set="current_subtotal" t-value="0"/>
+                        </t>
+                        <t t-if="line.display_type == 'line_note'">
+                            <td name="td_note_line" colspan="99">
+                                <span t-field="line.name"/>
+                            </td>
+                        </t>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+
+        <div class="clearfix" name="so_total_summary">
+            <div id="total" class="row" name="total">
+                <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                    <table class="table table-sm">
+                        <tr class="o_subtotal" style="">
+                            <td name="td_amount_untaxed_label"><strong>Importe:</strong></td>
+                            <td name="td_amount_untaxed" class="text-right">
+                                <span t-field="doc.amount_untaxed"/>
+                            </td>
+                        </tr>
+                        <t t-foreach="doc.amount_by_group" t-as="amount_by_group">
+                            <tr style="">
+                                <t t-if="amount_by_group[3] == 1 and doc.amount_untaxed == amount_by_group[2]">
+                                    <td name="td_amount_by_group_label_3">
+                                        <span><b>Iva:</b></span>
+                                        <!-- <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-esc="amount_by_group[2]" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></span> -->
+                                    </td>
+                                    <td name="td_amount_by_group_3" class="text-right o_price_total">
+                                        <span t-esc="amount_by_group[1]"
+                                            t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                    </td>
+                                </t>
+                                <t t-else ="">
+                                    <td name="td_amount_by_group_label">
+                                        <span t-esc="amount_by_group[0]"/>
+                                    </td>
+                                    <td name="td_amount_by_group" class="text-right o_price_total">
+                                        <span t-esc="amount_by_group[1]"
+                                            t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                        <tr class="o_total">
+                            <td name="td_amount_total_label"><strong>Total:</strong></td>
+                            <td name="td_amount_total" class="text-right">
+                                <span t-field="doc.amount_total"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div><br/><br/>
+        <div class="row">
+            <div class="text-center" style="font-size:9px;">
+                <strong><p t-field="doc.note" /></strong>
+            </div>
+        </div><br/><br/>
+        <div class="row">
+            <div class="text-center" style="font-size:9px;">
+                <p t-field="doc.note1" />
+            </div>
+        </div>
+
+    </div>
+</t>
+</template>
+
+<template id="so_custom_report">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="cuallimex_sales_custom_report.so_document_custom_report" t-lang="doc.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>
