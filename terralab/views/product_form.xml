@@ -1,0 +1,46 @@
+<odoo>
+  <data>
+
+    <!-- Customize Product (Test Type) -->
+    <record model="ir.ui.view" id="terralab.product_form_view">
+      <field name="name">TerraLab Product</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="priority" eval="15"/>
+      <field name="arch" type="xml">
+        <notebook position="inside">
+          <page string="TerraLab Settings">
+            <group name="terralab_settings">
+              <label for="terralab_sample_type" string="Sample Type"/>
+              <div class="o_row" name="terralab_sample_type">
+                <field name="terralab_sample_type"/>
+              </div>
+              <label for="terralab_test_name" string="Test Name"/>
+              <div class="o_row" name="terralab_test_name">
+                <field name="terralab_test_name"/>
+              </div>
+              <label for="terralab_spreadsheet" string="Spreadsheet"/>
+              <div class="o_row" name="terralab_spreadsheet">
+                <field name="terralab_spreadsheet"/>
+              </div>
+              <label for="terralab_spreadsheet_result_ref" string="Spreadsheet Result Ref"/>
+              <div class="o_row" name="terralab_spreadsheet_result_ref">
+                <field name="terralab_spreadsheet_result_ref" placeholder="Reference like Sheet1!A1"/>
+              </div>
+            </group>
+          </page>
+          <page string="TerraLab Test Variable Types" name="terralab_test_variable_types">
+            <field name="terralab_test_variable_types" widget="one2many" mode="tree,kanban">
+              <tree string="TerraLab Test Variable Types" editable="bottom">
+                <control>
+                  <create name="add_test_variable_type_control" string="Add a Test Variable Type"/>
+                </control>
+                <field name="name" string="Name" />
+              </tree>
+            </field>
+          </page>
+        </notebook>
+      </field>
+    </record>
+  </data>
+</odoo>

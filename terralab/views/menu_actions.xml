@@ -1,0 +1,108 @@
+<odoo>
+  <data>
+
+    <!-- Menu actions opening views on models -->
+    <record model="ir.actions.act_window" id="terralab.sampletypes_list_action">
+      <field name="name">Sample Types</field>
+      <field name="res_model">terralab.sampletype</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="terralab.testtypes_list_action">
+      <field name="name">Test Types</field>
+      <field name="res_model">product.template</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="terralab.testvariabletypes_list_action">
+      <field name="name">Test Variable Types</field>
+      <field name="res_model">terralab.testvariabletype</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Order lists -->
+    <record model="ir.actions.act_window" id="terralab.draft_orders_list_action">
+      <field name="name">Draft Orders</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("terralab_status", "=", "draft")]</field>
+      <field name="view_id" ref="terralab.order_tree"/>
+    </record>
+    <record model="ir.actions.act_window" id="terralab.submitted_orders_list_action">
+      <field name="name">Submitted Orders</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("terralab_status", "=", "submitted")]</field>
+      <field name="view_id" ref="terralab.order_tree"/>
+    </record>
+    <record model="ir.actions.act_window" id="terralab.accepted_orders_list_action">
+      <field name="name">Accepted Orders</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("terralab_status", "=", "accepted")]</field>
+      <field name="view_id" ref="terralab.order_tree"/>
+    </record>
+    <record model="ir.actions.act_window" id="terralab.rejected_orders_list_action">
+      <field name="name">Rejected Orders</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("terralab_status", "=", "rejected")]</field>
+      <field name="view_id" ref="terralab.order_tree"/>
+    </record>
+    <record model="ir.actions.act_window" id="terralab.completed_orders_list_action">
+      <field name="name">Completed Orders</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("terralab_status", "=", "completed")]</field>
+      <field name="view_id" ref="terralab.order_tree"/>
+    </record>
+    <record model="ir.actions.act_window" id="terralab.calculated_orders_list_action">
+      <field name="name">Calculated Orders</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("terralab_status", "=", "calculated")]</field>
+      <field name="view_id" ref="terralab.order_tree"/>
+    </record>
+    <record model="ir.actions.act_window" id="terralab.report_generated_orders_list_action">
+      <field name="name">Report Generated Orders</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("terralab_status", "=", "report_generated")]</field>
+      <field name="view_id" ref="terralab.order_tree"/>
+    </record>
+    <record model="ir.actions.act_window" id="terralab.completed_orders_list_action">
+      <field name="name">Completed Orders</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("terralab_status", "=", "completed")]</field>
+      <field name="view_id" ref="terralab.order_tree"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="terralab.samples_list_action">
+      <field name="name">Samples</field>
+      <field name="res_model">terralab.sample</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="terralab.tests_list_action">
+      <field name="name">Tests</field>
+      <field name="res_model">terralab.test</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- View test variables related to order -->
+    <record model="ir.actions.act_window" id="terralab.testvariables_list_action">
+      <field name="name">Test Variables</field>
+      <field name="res_model">terralab.testvariable</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="terralab.spreadsheets_list_action">
+      <field name="name">Spreadsheets</field>
+      <field name="res_model">terralab.spreadsheet</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="terralab.reports_list_action">
+      <field name="name">Reports</field>
+      <field name="res_model">terralab.report</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+  </data>
+</odoo>

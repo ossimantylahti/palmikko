@@ -1,0 +1,65 @@
+<odoo>
+  <data>
+    <!-- Customize Order Form -->
+    <record model="ir.ui.view" id="terralab.order_form_view">
+      <field name="name">TerraLab Order</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="priority" eval="15"/>
+      <field name="arch" type="xml">
+        <header>
+          <button name="action_terralab_submit" string="Submit TerraLab Order" type="object" attrs="{'invisible': [('terralab_status', '!=', 'draft')]}"/>
+          <button name="action_terralab_accept" string="Accept TerraLab Order" type="object" attrs="{'invisible': [('terralab_status', '!=', 'submitted')]}"/>
+          <button name="action_terralab_reject" string="Reject TerraLab Order" type="object" attrs="{'invisible': [('terralab_status', '!=', 'submitted')]}"/>
+          <button name="action_terralab_draft" string="Reset to TerraLab Draft" type="object" attrs="{'invisible': [('terralab_status', 'not in', ['submitted', 'rejected'])]}"/>
+          <button name="action_terralab_view_tests" string="View TerraLab Tests" type="object" attrs="{'invisible': [('terralab_status', 'not in', ['draft', 'submitted', 'accepted', 'rejected', 'calculated', 'report_generated', 'completed'])]}"/>
+          <button name="action_terralab_view_testvariables" string="View TerraLab Test Variables" type="object" attrs="{'invisible': [('terralab_status', 'not in', ['draft', 'submitted', 'accepted', 'rejected', 'calculated', 'report_generated', 'completed'])]}"/>
+          <button name="action_terralab_calculate" string="Calculate TerraLab Test Results" type="object" attrs="{'invisible': [('terralab_status', '!=', 'accepted')]}"/>
+          <button name="action_terralab_calculate" string="Recalculate TerraLab Test Results" type="object" attrs="{'invisible': [('terralab_status', '!=', 'calculated')]}"/>
+          <button name="action_terralab_generate_report" string="Generate TerraLab Report" type="object" attrs="{'invisible': [('terralab_status', '!=', 'calculated')]}"/>
+          <button name="action_terralab_complete" string="Complete TerraLab Order" type="object" attrs="{'invisible': [('terralab_status', '!=', 'report_generated')]}"/>
+        </header>
+        <notebook position="inside">
+
+          <page string="TerraLab Status" name="terralab_status">
+            <group name="terralab">
+              <label for="terralab_status" string="TerraLab Status"/>
+              <div class="o_row" name="terralab_status">
+                <field name="terralab_status"/>
+              </div>
+            </group>
+          </page>
+
+          <page string="TerraLab Samples" name="terralab_samples">
+            <field name="terralab_samples" widget="one2many" mode="tree,kanban">
+              <tree string="TerraLab Samples" editable="bottom">
+                <control>
+                  <create name="add_sample_control" string="Add a Sample"/>
+                </control>
+                <field name="sample_type" string="Sample Type" />
+                <field name="serial_number" string="Serial Number" />
+                <field name="tests" string="Tests">
+                  <control>
+                    <create name="add_test_control" string="Add a Test"/>
+                  </control>
+                  <tree string="Tests">
+                    <field name="test_type"/>
+                  </tree>
+                </field>
+              </tree>
+            </field>
+          </page>
+
+          <page string="TerraLab Reports" name="terralab_reports">
+            <field name="terralab_reports" widget="one2many" mode="tree,kanban">
+              <tree string="TerraLab Reports" editable="bottom">
+                <field name="generated_at" string="Generated At" />
+              </tree>
+            </field>
+          </page>
+
+        </notebook>
+      </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+
+    <!-- Views for managing TerraLab Test Variables -->
+    <record model="ir.ui.view" id="terralab.testvariable_tree">
+      <field name="name">terralab.testvariable.tree</field>
+      <field name="model">terralab.testvariable</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="test"/>
+          <field name="sample"/>
+          <field name="order_name"/>
+          <field name="test_variable_type"/>
+          <field name="value"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="terralab.testvariable_form">
+      <field name="name">terralab.testvariable.form</field>
+      <field name="model">terralab.testvariable</field>
+      <field name="arch" type="xml">
+          <form string="Test Variable Form">
+            <sheet>
+              <group>
+                <field name="test"/>
+                <field name="sample"/>
+                <field name="test_variable_type"/>
+                <field name="value"/>
+              </group>
+            </sheet>
+          </form>
+      </field>
+    </record>
+
+  </data>
+</odoo>

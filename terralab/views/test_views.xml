@@ -1,0 +1,49 @@
+<odoo>
+  <data>
+
+    <!-- Views for managing TerraLab Tests -->
+    <record model="ir.ui.view" id="terralab.test_tree">
+      <field name="name">terralab.test.tree</field>
+      <field name="model">terralab.test</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="sample"/>
+          <field name="test_type"/>
+          <field name="test_result"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="terralab.test_form">
+      <field name="name">terralab.test.form</field>
+      <field name="model">terralab.test</field>
+      <field name="arch" type="xml">
+        <form string="Test Form">
+          <header>
+            <button name="action_terralab_calculate" string="Calculate TerraLab Test Result" type="object"/>
+          </header>
+          <sheet>
+            <notebook position="inside">
+              <page string="Test Settings">
+                <group name="test_settings">
+                  <field name="test_type"/>
+                  <field name="test_result"/>
+                </group>
+              </page>
+              <page string="Test Variables" name="terralab_test_variables">
+                <field name="test_variables" widget="one2many" mode="tree,kanban">
+                  <tree string="TerraLab Test Variables">
+                    <field name="sample" />
+                    <field name="test_variable_type" />
+                    <field name="value" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+  </data>
+</odoo>

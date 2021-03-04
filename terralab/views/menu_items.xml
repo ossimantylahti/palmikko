@@ -1,0 +1,35 @@
+<odoo>
+  <data>
+    <!-- Top menu item -->
+    <menuitem name="TerraLab" id="terralab.menu_root" web_icon="terralab,static/description/icon.png"/>
+
+    <!-- Menu categories -->
+    <menuitem sequence="11" name="Reception" id="terralab.reception_menuitem" parent="terralab.menu_root"/>
+    <menuitem sequence="12" name="Laboratory" id="terralab.laboratory_menuitem" parent="terralab.menu_root"/>
+    <menuitem sequence="13" name="Configuration" id="terralab.configuration_menuitem" parent="terralab.menu_root"/>
+    <menuitem sequence="14" name="Debugging" id="terralab.debugging_menuitem" parent="terralab.menu_root"/>
+
+    <!-- Terralab Reception Menu -->
+    <menuitem sequence="11" name="Draft Orders" id="terralab.draft_orders_list_menuitem" parent="terralab.reception_menuitem" action="terralab.draft_orders_list_action"/>
+    <menuitem sequence="12" name="Rejected Orders" id="terralab.rejected_orders_list_menuitem" parent="terralab.reception_menuitem" action="terralab.rejected_orders_list_action"/>
+    <menuitem sequence="13" name="Completed Orders" id="terralab.completed_orders_list_menuitem" parent="terralab.reception_menuitem" action="terralab.completed_orders_list_action"/>
+    <menuitem sequence="14" name="Reports" id="terralab.reports_list_menuitem" parent="terralab.reception_menuitem" action="terralab.reports_list_action"/>
+
+    <!-- Terralab Laboratory Menu -->
+    <menuitem sequence="11" name="Submitted Orders" id="terralab.submitted_orders_list_menuitem" parent="terralab.laboratory_menuitem" action="terralab.submitted_orders_list_action"/>
+    <menuitem sequence="12" name="Accepted Orders" id="terralab.accepted_orders_list_menuitem" parent="terralab.laboratory_menuitem" action="terralab.accepted_orders_list_action"/>
+    <menuitem sequence="13" name="Calculated Orders" id="terralab.calculated_orders_list_menuitem" parent="terralab.laboratory_menuitem" action="terralab.calculated_orders_list_action"/>
+    <menuitem sequence="14" name="Report Generated Orders" id="terralab.report_generated_orders_list_menuitem" parent="terralab.laboratory_menuitem" action="terralab.report_generated_orders_list_action"/>
+
+    <!-- TerraLab Configuration Menu -->
+    <menuitem sequence="11" name="Sample Types" id="terralab.sampletypes_list_menuitem" parent="terralab.configuration_menuitem" action="terralab.sampletypes_list_action"/>
+    <menuitem sequence="12" name="Test Types" id="terralab.testtypes_list_menuitem" parent="terralab.configuration_menuitem" action="terralab.testtypes_list_action"/>
+    <menuitem sequence="13" name="Spreadsheets" id="terralab.spreadsheets_list_menuitem" parent="terralab.configuration_menuitem" action="terralab.spreadsheets_list_action"/>
+
+    <!-- Terralab Debug Menu -->
+    <menuitem sequence="11" name="Samples" id="terralab.samples_list_menuitem" parent="terralab.debugging_menuitem" action="terralab.samples_list_action"/>
+    <menuitem sequence="12" name="Tests" id="terralab.tests_list_menuitem" parent="terralab.debugging_menuitem" action="terralab.tests_list_action"/>
+    <menuitem sequence="13" name="Test Variables" id="terralab.testvariables_list_menuitem" parent="terralab.debugging_menuitem" action="terralab.testvariables_list_action"/>
+    <menuitem sequence="14" name="Test Variable Types" id="terralab.testvariabletypes_list_menuitem" parent="terralab.debugging_menuitem" action="terralab.testvariabletypes_list_action"/>
+  </data>
+</odoo>

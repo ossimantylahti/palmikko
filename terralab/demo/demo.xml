@@ -1,0 +1,13 @@
+<odoo>
+  <data>
+    <record id="sample_type_1" model="terralab.sampletype">
+      <field name="name">Water Sample (demo)</field>
+    </record>
+    <record id="sample_type_2" model="terralab.sampletype">
+      <field name="name">Ground Sample (demo)</field>
+    </record>
+    <record id="sample_type_3" model="terralab.sampletype">
+      <field name="name">Air Sample (demo)</field>
+    </record>
+  </data>
+</odoo>

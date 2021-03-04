@@ -1,0 +1,32 @@
+<odoo>
+  <data>
+
+    <!-- Views for managing TerraLab Reports -->
+    <record model="ir.ui.view" id="terralab.report_tree">
+      <field name="name">terralab.report.tree</field>
+      <field name="model">terralab.report</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="order"/>
+          <field name="generated_at"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="terralab.report_form">
+      <field name="name">terralab.report.form</field>
+      <field name="model">terralab.report</field>
+      <field name="arch" type="xml">
+          <form string="Report Form">
+            <sheet>
+              <group>
+                <field name="order"/>
+                <field name="generated_at" readonly="1"/>
+              </group>
+            </sheet>
+          </form>
+      </field>
+    </record>
+
+  </data>
+</odoo>

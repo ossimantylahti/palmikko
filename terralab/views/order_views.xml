@@ -1,0 +1,34 @@
+<odoo>
+  <data>
+
+    <!-- Views for managing TerraLab Orders -->
+    <record model="ir.ui.view" id="terralab.order_tree">
+      <field name="name">terralab.order.tree</field>
+      <field name="model">sale.order</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" string="Order Number" readonly="1"/>
+          <field name="create_date"/>
+          <field name="partner_id" readonly="1"/>
+          <field name="terralab_status"/>
+          <field name="terralab_next_action"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="terralab.order_form">
+      <field name="name">terralab.order.form</field>
+      <field name="model">sale.order</field>
+      <field name="arch" type="xml">
+          <form string="Order Form">
+            <sheet>
+              <group>
+                <field name="terralab_status"/>
+              </group>
+            </sheet>
+          </form>
+      </field>
+    </record>
+
+  </data>
+</odoo>
